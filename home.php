@@ -1,1 +1,1 @@
-Dit is de homepage
+<h3>Home</h3>

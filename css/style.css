@@ -2,16 +2,29 @@
 {
    padding: 0;
    margin: 0;
+   font-family: Verdana, Arial;
+   color: white;
 }
 
 
 div
 {
-   border: 2px solid rgb(200, 200, 200);
+   border: 5px solid rgb(200, 200, 200);
+   margin-bottom: 0.5em;
+   border-radius: 0.4em;
+   padding:0.5em;
+   background-color: rgb(255, 137,0);
+}
+
+#banner, #footer, #link
+{
+   text-align:center;
 }
 
 #container
 {
    width: 50%;
    margin: 50px auto;
+   border: 0px;
+   background-color: white;
 }
