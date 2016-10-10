@@ -3,7 +3,6 @@
    padding: 0;
    margin: 0;
    font-family: Verdana, Arial;
-   color: white;
 }
 
 
@@ -19,6 +18,12 @@ div
 #banner, #footer, #link
 {
    text-align:center;
+   color: white;
+}
+
+#link
+{
+   padding: 0;
 }
 
 #container
@@ -27,4 +32,43 @@ div
    margin: 50px auto;
    border: 0px;
    background-color: white;
+}
+
+li
+{
+   padding: 0em;
+   margin: 0;
+}
+
+a:link
+{
+   text-decoration: none;
+   /*border: 1px solid black;*/
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+li a:hover
+{
+   text-decoration: none;
+   background-color: white;   
+}
+
+a:active {
+    text-decoration: none;
+    color: white;
+}
+
+ul {
+    list-style-type: none;
+    background-color: rgb(255, 137,0);
+    border: 1px solid green;
+}
+
+li
+{
+   border: 1px solid black;
+   display: inline;
 }
