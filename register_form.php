@@ -1,8 +1,41 @@
 <?php
    if (isset($_POST["submit"]))
    {
-      //var_dump($_POST);
-      
+      var_dump($_POST);
+      include("./connect_db.php");
+
+      $sql = "INSERT INTO `users` (`id`,
+                                   `firstname`,
+                                   `infix`,
+                                   `lastname`,
+                                   `email`) 
+              VALUES              (NULL,
+                                   '".$_POST["firstname"]."',
+                                   '".$_POST["infix"]."',
+                                   '".$_POST["lastname"]."',
+                                   '".$_POST["email"]."')";
+      //echo $sql;
+      $result = mysqli_query($conn, $sql);
+      if ($result)
+      {
+         echo "Dit is de waarde van result: ".$result;
+
+         $to = "adruijter@gmail.com";
+         $subject = "Activatielink voor inloggen";
+         $message = "Bedankt voor het registreren. Om het registratieproces \n". 
+                    "te voltooien moet u op de onderstaande link klikken\n". 
+                    "http://localhost/2016-2017/am1b/loginregistration/index.php?content=activate \n".
+                    "Met vriendelijke groet,\n".
+                    "Administrator";
+        mail($to, $subject, $message);
+
+
+      }
+      else
+      {
+         echo "Registreer opnieuw, registratie is niet volledig voltooid.";
+         header("refresh:4; url=./index.php?content=register_form");
+      }
    }
 ?>
 <h3>Registreer formulier</h3>
@@ -24,7 +57,7 @@
          </tr>
          <tr>
             <td>E-mail: </td>
-            <td><input type="text" name="email" required></td>
+            <td><input type="email" name="email" required></td>
          </tr>
          <tr>
             <td></td>
