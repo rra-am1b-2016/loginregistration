@@ -1,8 +1,17 @@
 <?php
    if (isset($_POST["submit"]))
    {
-      var_dump($_POST);
+      //var_dump($_POST);
       include("./connect_db.php");
+
+      $first3OfFirstname = substr($_POST["firstname"], 0, 3);
+      $last4OfLastname = substr($_POST["lastname"], (strlen($_POST["lastname"]) - 4), 4);
+      $date = date("d-m-Y H:i:s");
+
+      $tempPassword = $first3OfFirstname.$date.$last4OfLastname."a";
+      $tempPassword = sha1($tempPassword);
+      echo $tempPassword;
+
 
       $sql = "INSERT INTO `users` (`id`,
                                    `firstname`,
@@ -18,7 +27,7 @@
       $result = mysqli_query($conn, $sql);
       if ($result)
       {
-         echo "Dit is de waarde van result: ".$result;
+         //echo "Dit is de waarde van result: ".$result;
 
          $to = "adruijter@gmail.com";
          $subject = "Activatielink voor inloggen";

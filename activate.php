@@ -1,5 +1,13 @@
+<?php
+   if ( isset($_POST["submit"]) )
+   {
+         echo "hallo";
+   }
+   else
+   {
+?>
 <h2>Wijzig uw wachtwoord</h2>
-<form action="" method="post">
+<form action="./index.php?content=activate" method="post">
    <table>
       <tr>
          <td>Wachtwoord:</td>
@@ -15,3 +23,6 @@
       </tr>
    </table>
 </form>
+<?php
+   }
+?>
