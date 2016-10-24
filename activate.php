@@ -13,14 +13,26 @@
          // Zet de resource om naar een associatief array
          $record = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-         echo "Password uit de database: ".$record["password"]."<br>";
-         echo "Meegegeven Password: ".$_POST["pw"];
+         // Wanneer de via de url meegegeven id - pw combinatie gelijk is aan die in de database...
          if (!strcmp($_POST["pw"], $record["password"]))
          {
-               echo "De passwords zijn gelijk";
+               // dan updaten we het password veld naar de nieuwe waarde en zetten we activate op true.
+               $sql = "UPDATE `users` SET `password` = '".sha1($_POST["password"])."',
+                                          `activate` = 'true'
+                       WHERE              `id` = ".$_POST["id"].";";
+
+               $result = mysqli_query($conn, $sql);
+
+               if ($result)
+               {
+                     echo "Uw account is geactiveerd en uw password gewijzigd.";
+                     header("refresh: 4; url=index.php?content=home");
+               }
          }
          else
          {
+               // Wanneer de via de url meegegeven id - pw combinatie niet gelijk is aan die in de database...
+               // Dan melden we de onderstaande tekst en sturen we door naar de homepage.
                echo "U heeft geen rechten op deze pagina, u wordt doorgestuurd naar de homepage";
                header("refresh: 400; url=index.php?content=home");
          }
