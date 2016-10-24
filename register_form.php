@@ -8,7 +8,7 @@
       $last4OfLastname = substr($_POST["lastname"], (strlen($_POST["lastname"]) - 4), 4);
       $date = date("d-m-Y H:i:s");
 
-      $tempPassword = $first3OfFirstname.$date.$last4OfLastname."a";
+      $tempPassword = $first3OfFirstname.$date.$last4OfLastname;
       $tempPassword = sha1($tempPassword);
       echo $tempPassword;
 
