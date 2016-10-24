@@ -27,15 +27,20 @@
                                    '".$tempPassword."')";
       //echo $sql;
       $result = mysqli_query($conn, $sql);
+
+      // We vragen het id op van het pas gemaakte record uit de database. Het veld id is autonummering
+      $id = mysqli_insert_id($conn);
+
       if ($result)
       {
          //echo "Dit is de waarde van result: ".$result;
 
-         $to = "adruijter@gmail.com";
+         $to = $_POST["email"];
          $subject = "Activatielink voor inloggen";
-         $message = "Bedankt voor het registreren. Om het registratieproces \n". 
+         $message = "Geachte mevrouw/heer ".$_POST["firstname"]." ".$_POST["infix"]." ".$_POST["lastname"]."\n".
+                    "Bedankt voor het registreren. Om het registratieproces \n". 
                     "te voltooien moet u op de onderstaande link klikken\n". 
-                    "http://localhost/2016-2017/am1b/loginregistration/index.php?content=activate \n".
+                    "http://localhost/2016-2017/am1b/loginregistration/index.php?content=activate&id=".$id."&pw=".$tempPassword." \n".
                     "Met vriendelijke groet,\n".
                     "Administrator";
         mail($to, $subject, $message);
