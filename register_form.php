@@ -10,19 +10,21 @@
 
       $tempPassword = $first3OfFirstname.$date.$last4OfLastname;
       $tempPassword = sha1($tempPassword);
-      echo $tempPassword;
+      //echo $tempPassword;
 
 
       $sql = "INSERT INTO `users` (`id`,
                                    `firstname`,
                                    `infix`,
                                    `lastname`,
-                                   `email`) 
+                                   `email`,
+                                   `password`) 
               VALUES              (NULL,
                                    '".$_POST["firstname"]."',
                                    '".$_POST["infix"]."',
                                    '".$_POST["lastname"]."',
-                                   '".$_POST["email"]."')";
+                                   '".$_POST["email"]."',
+                                   '".$tempPassword."')";
       //echo $sql;
       $result = mysqli_query($conn, $sql);
       if ($result)
@@ -47,7 +49,7 @@
       }
    }
 ?>
-<h3>Registreer formulier</h3>
+<h3>Registratieformulier</h3>
 <!-- voornaam, tussenvoegsel, achternaam, emailadres, submitknop verplichte velden-->
 
 <form action="./index.php?content=register_form"  method="post">
