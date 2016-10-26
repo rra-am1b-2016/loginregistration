@@ -16,18 +16,29 @@
          // Wanneer de via de url meegegeven id - pw combinatie gelijk is aan die in de database...
          if (!strcmp($_POST["pw"], $record["password"]))
          {
-               // dan updaten we het password veld naar de nieuwe waarde en zetten we activate op true.
-               $sql = "UPDATE `users` SET `password` = '".sha1($_POST["password"])."',
-                                          `activate` = 'true'
-                       WHERE              `id` = ".$_POST["id"].";";
+               
+                  if ()
+                  {
+                        // dan updaten we het password veld naar de nieuwe waarde en zetten we activate op true.
+                        $sql = "UPDATE `users` SET `password` = '".sha1($_POST["password"])."',
+                                                      `activate` = 'true'
+                              WHERE              `id` = ".$_POST["id"].";";
 
-               $result = mysqli_query($conn, $sql);
+                        $result = mysqli_query($conn, $sql);
 
-               if ($result)
-               {
-                     echo "Uw account is geactiveerd en uw password gewijzigd.";
-                     header("refresh: 4; url=index.php?content=home");
-               }
+                        if ($result)
+                        {
+                              echo "Uw account is geactiveerd en uw password gewijzigd.";
+                              header("refresh: 4; url=index.php?content=home");
+                        }
+                  }
+                  else
+                  {
+                        echo "De twee ingevoerde wachtwoorden komen niet overeen. Probeer het nog een keer.<br>";
+                        echo "U wordt doorgestuurd naar de betreffende pagina";
+                        header("refresh: 4; url=index.php?content=activate&id=".$_POST["id"]."&pw=".$_POST["pw"]);
+                  }
+              
          }
          else
          {
