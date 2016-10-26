@@ -17,7 +17,7 @@
          if (!strcmp($_POST["pw"], $record["password"]))
          {
                
-                  if ()
+                  if (strcmp($_POST["password"], $_POST["verification_password"]) == 0)
                   {
                         // dan updaten we het password veld naar de nieuwe waarde en zetten we activate op true.
                         $sql = "UPDATE `users` SET `password` = '".sha1($_POST["password"])."',
