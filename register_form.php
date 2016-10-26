@@ -43,7 +43,9 @@
                     "http://localhost/2016-2017/am1b/loginregistration/index.php?content=activate&id=".$id."&pw=".$tempPassword." \n".
                     "Met vriendelijke groet,\n".
                     "Administrator";
-        mail($to, $subject, $message);
+
+        $headers = "Cc: admin@gmail.com, root@gmail.com";
+        mail($to, $subject, $message, $headers);
 
 
       }

@@ -16,6 +16,7 @@
          // Wanneer de via de url meegegeven id - pw combinatie gelijk is aan die in de database...
          if (!strcmp($_POST["pw"], $record["password"]))
          {
+             
                
                   if (strcmp($_POST["password"], $_POST["verification_password"]) == 0)
                   {
@@ -44,8 +45,16 @@
          {
                // Wanneer de via de url meegegeven id - pw combinatie niet gelijk is aan die in de database...
                // Dan melden we de onderstaande tekst en sturen we door naar de homepage.
-               echo "U heeft geen rechten op deze pagina, u wordt doorgestuurd naar de homepage";
-               header("refresh: 400; url=index.php?content=home");
+               if ($record["activate"] )
+               {
+                     echo "Uw account is al geactiveerd. U wordt nu doorgestuurd naar de inlogpagina.";
+                     header("refresh: 4; url=index.php?content=login_form&email=".$record["email"]);
+               }
+               else
+               {
+                  echo "U heeft geen rechten op deze pagina, u wordt doorgestuurd naar de homepage";
+                  header("refresh: 400; url=index.php?content=home");
+               }
          }
    }
    else
