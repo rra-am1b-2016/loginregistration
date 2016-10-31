@@ -11,48 +11,62 @@
       $tempPassword = $first3OfFirstname.$date.$last4OfLastname;
       $tempPassword = sha1($tempPassword);
       //echo $tempPassword;
+      
+      // Check of het opgegeven e-mailadres al bestaat
+      $sql = "SELECT * FROM `users` WHERE `email` = '".$_POST["email"]."'";
 
+      //echo $sql; exit();
 
-      $sql = "INSERT INTO `users` (`id`,
-                                   `firstname`,
-                                   `infix`,
-                                   `lastname`,
-                                   `email`,
-                                   `password`) 
-              VALUES              (NULL,
-                                   '".$_POST["firstname"]."',
-                                   '".$_POST["infix"]."',
-                                   '".$_POST["lastname"]."',
-                                   '".$_POST["email"]."',
-                                   '".$tempPassword."')";
-      //echo $sql;
       $result = mysqli_query($conn, $sql);
 
-      // We vragen het id op van het pas gemaakte record uit de database. Het veld id is autonummering
-      $id = mysqli_insert_id($conn);
-
-      if ($result)
+      if ( mysqli_num_rows($result) == 0)
       {
-         //echo "Dit is de waarde van result: ".$result;
+            $sql = "INSERT INTO `users` (`id`,
+                                    `firstname`,
+                                    `infix`,
+                                    `lastname`,
+                                    `email`,
+                                    `password`) 
+                  VALUES              (NULL,
+                                    '".$_POST["firstname"]."',
+                                    '".$_POST["infix"]."',
+                                    '".$_POST["lastname"]."',
+                                    '".$_POST["email"]."',
+                                    '".$tempPassword."')";
+            //echo $sql;
+            $result = mysqli_query($conn, $sql);
 
-         $to = $_POST["email"];
-         $subject = "Activatielink voor inloggen";
-         $message = "Geachte mevrouw/heer ".$_POST["firstname"]." ".$_POST["infix"]." ".$_POST["lastname"]."\n".
-                    "Bedankt voor het registreren. Om het registratieproces \n". 
-                    "te voltooien moet u op de onderstaande link klikken\n". 
-                    "http://localhost/2016-2017/am1b/loginregistration/index.php?content=activate&id=".$id."&pw=".$tempPassword." \n".
-                    "Met vriendelijke groet,\n".
-                    "Administrator";
+            // We vragen het id op van het pas gemaakte record uit de database. Het veld id is autonummering
+            $id = mysqli_insert_id($conn);
 
-        $headers = "Cc: admin@gmail.com, root@gmail.com";
-        mail($to, $subject, $message, $headers);
+            if ($result)
+            {
+            //echo "Dit is de waarde van result: ".$result;
+
+            $to = $_POST["email"];
+            $subject = "Activatielink voor inloggen";
+            $message = "Geachte mevrouw/heer ".$_POST["firstname"]." ".$_POST["infix"]." ".$_POST["lastname"]."\n".
+                        "Bedankt voor het registreren. Om het registratieproces \n". 
+                        "te voltooien moet u op de onderstaande link klikken\n". 
+                        "http://localhost/2016-2017/am1b/loginregistration/index.php?content=activate&id=".$id."&pw=".$tempPassword." \n".
+                        "Met vriendelijke groet,\n".
+                        "Administrator";
+
+            $headers = "Cc: admin@gmail.com, root@gmail.com";
+            mail($to, $subject, $message, $headers);
 
 
+            }
+            else
+            {
+            echo "Registreer opnieuw, registratie is niet volledig voltooid.";
+            header("refresh:4; url=./index.php?content=register_form");
+            }
       }
       else
       {
-         echo "Registreer opnieuw, registratie is niet volledig voltooid.";
-         header("refresh:4; url=./index.php?content=register_form");
+            echo "Het door u gekozen e-mailadres is al in gebruik, kies een ander.";
+            header("refresh:4; url=./index.php?content=register_form");
       }
    }
 ?>
