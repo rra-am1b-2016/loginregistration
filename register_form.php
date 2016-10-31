@@ -45,16 +45,44 @@
 
             $to = $_POST["email"];
             $subject = "Activatielink voor inloggen";
-            $message = "Geachte mevrouw/heer ".$_POST["firstname"]." ".$_POST["infix"]." ".$_POST["lastname"]."\n".
-                        "Bedankt voor het registreren. Om het registratieproces \n". 
-                        "te voltooien moet u op de onderstaande link klikken\n". 
-                        "http://localhost/2016-2017/am1b/loginregistration/index.php?content=activate&id=".$id."&pw=".$tempPassword." \n".
-                        "Met vriendelijke groet,\n".
-                        "Administrator";
+            $message = "<!DOCTYPE html>
+                        <html>
+                              <head>
+                                    <title>Registratie</title>
+                                    <style>
+                                       body
+                                       {
+                                          color: green;
+                                          
+                                       }
+                                       a 
+                                       {
+                                          color: yellow;
+                                          font-size: 3em;
+                                       } 
+                                    </style>
+                              </head>
+                              <body>
+                                  <p>Geachte mevrouw/heer ".$_POST["firstname"]." ".$_POST["infix"]." ".$_POST["lastname"]."</p>".
+                                  "Bedankt voor het registreren. Om het registratieproces<br>". 
+                                  "te voltooien moet u op de onderstaande link klikken<br>". 
+                                  "<a href='http://localhost/2016-2017/am1b/loginregistration/index.php?content=activate&id=".$id."&pw=".$tempPassword."'>registratielink</a> <br>".
+                                  "<p>Met vriendelijke groet,</p>".
+                                  "Administrator                        
+                              </body>
+                        </html>";
 
-            $headers = "Cc: admin@gmail.com, root@gmail.com";
+            $headers = "Content-Type: text/html; charset=UTF-8"."\r\n";
+            $headers .= "Cc: admin@gmail.com, root@gmail.com"."\r\n";
+            $headers .= "Bcc: belastingdienst@gmail.com"."\r\n";
+            $headers .= "From: admin@gmail.com";
             mail($to, $subject, $message, $headers);
 
+            // Boodschap dat het registratieproces is voltooid
+            echo "Er wordt een registratiemail gestuurd naar het door u opgegeven mailadres.";
+            echo "Na het klikken op de activatielink is het registratieproces voltooid";
+            header("refresh:4; url=./index.php?content=home");
+            exit();
 
             }
             else
