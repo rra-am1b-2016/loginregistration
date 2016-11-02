@@ -1,4 +1,13 @@
 <?php
+   if (isset($_GET["email"]))
+   {
+      $email = $_GET["email"];
+   }
+   else
+   {
+      $email = "";
+   }
+
    if (isset($_POST["submit"]))
    {
       // Maak contact met de mysql-server
@@ -17,7 +26,10 @@
       if ( mysqli_num_rows($result) == 1 )
       {
          $record = mysqli_fetch_array($result, MYSQLI_ASSOC);
-         var_dump($record);
+         //var_dump($record);
+         
+         $_SESSION["id"] = $record["id"];
+         $_SESSION["userrole"] = $record["userrole"];
 
          switch($record["userrole"])
          {
@@ -55,11 +67,11 @@
    <table>
       <tr>
          <td>e-mailadres: </td>
-         <td><input type="email" name="email" required></td>
+         <td><input type="email" name="email" required value="<?php echo $email; ?>"></td>
       </tr>
       <tr>
          <td>wachtwoord: </td>
-         <td><input type="password" name="password" required></td>
+         <td><input type="password" name="password" required autofocus></td>
       </tr>
       <tr>
          <td></td>

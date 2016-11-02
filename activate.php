@@ -30,7 +30,7 @@
                         if ($result)
                         {
                               echo "Uw account is geactiveerd en uw password gewijzigd.";
-                              header("refresh: 4; url=index.php?content=home");
+                              header("refresh: 4; url=index.php?content=login_form&email=".$record["email"]);
                         }
                   }
                   else
